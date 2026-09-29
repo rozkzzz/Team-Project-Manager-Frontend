@@ -1,22 +1,29 @@
 import './App.css'
 import ProjectHeader from './ProjectHeader.jsx'
 import {useState} from 'react';
-
+import TaskItem from './TaskItem.jsx'
 
 function App() {
   const projectName="Website Redesign";
-  const [status,setStatus]=useState('Active');
+  const [status,setStatus]=useState(true);
+  const [tasks,setTasks] = useState([
+      { id: 1, title: 'Design Homepage', status: 'todo' },
+      { id: 2, title: 'Create API', status: 'doing' },
+      { id: 3, title: 'Deploy Website', status: 'done' }
+  ])
 
-  
   return (
     <>
         <h1>Team Project Manager</h1>
-        <ProjectHeader projectName={projectName} status={status} />
-        <button type="button" onClick={()=>setStatus('Complete')}>Change Status</button>
-        
+        <ProjectHeader projectName={projectName} status={status ? 'Active':'Complete'} />
+        <button type="button" onClick={()=>setStatus(status=>!status)}>Change Status</button>
+        {
+  tasks.map(task => (
+    <TaskItem key={task.id} id={task.id} title={task.title} status={task.status} />
+  ))
+}
     </>
   )
 }
-
 
 export default App
