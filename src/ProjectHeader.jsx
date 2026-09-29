@@ -1,7 +1,8 @@
-function ProjectHeader(){
+function ProjectHeader({projectName,status}){
   return(
     <>
-      <p>Project: Website Redesign</p>
+      <p>{projectName}</p>
+      <p>{status}</p>
     </>
   )
 }
