@@ -11,19 +11,29 @@ function App() {
       { id: 2, title: 'Create API', status: 'doing' },
       { id: 3, title: 'Deploy Website', status: 'done' }
   ])
-
   return (
     <>
         <h1>Team Project Manager</h1>
         <ProjectHeader projectName={projectName} status={status ? 'Active':'Complete'} />
         <button type="button" onClick={()=>setStatus(status=>!status)}>Change Status</button>
         {
+  
   tasks.map(task => (
-    <TaskItem key={task.id} id={task.id} title={task.title} status={task.status} />
+    <TaskItem key={task.id} id={task.id} title={task.title} status={task.status} nextStatus={ChangeStatus}/>
   ))
 }
     </>
   )
+}
+
+function ChangeStatus(id){
+    if (Taskstatus === 'todo')
+      return 'doing';
+    if (Taskstatus === 'doing')
+      return 'done';
+    if (Taskstatus === 'done')
+      return 'todo';
+    
 }
 
 export default App

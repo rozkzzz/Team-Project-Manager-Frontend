@@ -1,7 +1,8 @@
-function TaskItem({id,title,status}){
+function TaskItem({id,title,status,nextStatus}){
   return(
     <>
-      <p>{id}. {title} - {status}</p><button>Change Status</button>
+      <p>{id}. {title} - {status}</p>
+      <button onClick={()=>nextStatus(id)}>Change Status</button>
     </>
   )
 }
