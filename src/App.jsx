@@ -11,11 +11,29 @@ function App() {
       { id: 2, title: 'Create API', status: 'doing' },
       { id: 3, title: 'Deploy Website', status: 'done' }
   ])
+  function ChangeStatus(id){
+    let newTask = tasks.map(function(task){
+        if(task.id === id){
+          if (task.status === 'todo')
+            return {...task,status:'doing'}
+          else if (task.status === 'doing')
+            return {...task,status:'done'}
+          else if (task.status === 'done')
+            return {...task,status:'todo'}
+        
+        }else
+          return task
+    })
+    setTasks(newTask);
+  }
+
+
   return (
     <>
         <h1>Team Project Manager</h1>
         <ProjectHeader projectName={projectName} status={status ? 'Active':'Complete'} />
         <button type="button" onClick={()=>setStatus(status=>!status)}>Change Status</button>
+        <p>Task title</p><input></input><button type="button" >addTask</button>
         {
   
   tasks.map(task => (
@@ -26,14 +44,6 @@ function App() {
   )
 }
 
-function ChangeStatus(id){
-    if (Taskstatus === 'todo')
-      return 'doing';
-    if (Taskstatus === 'doing')
-      return 'done';
-    if (Taskstatus === 'done')
-      return 'todo';
-    
-}
+
 
 export default App
