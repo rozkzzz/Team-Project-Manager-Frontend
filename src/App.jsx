@@ -27,6 +27,12 @@ function App() {
     })
     setTasks(newTask);
   }
+  function addTask(e){
+      e.preventDefault();
+      let newTask = {id:tasks.length+1,title:title,status:'todo'}
+      setTasks([...tasks,newTask]);
+      setTitle("");
+    }
 
 
   return (
@@ -34,14 +40,15 @@ function App() {
         <h1>Team Project Manager</h1>
         <ProjectHeader projectName={projectName} status={status ? 'Active':'Complete'} />
         <button type="button" onClick={()=>setStatus(status=>!status)}>Change Status</button>
-        <label>Task title:<input value={taskinput} onChange={(e)=>setTitle(e.target.value)}></input></label>
-        {
-  
-  tasks.map(task => (
-    <TaskItem key={task.id} id={task.id} title={task.title} status={task.status} nextStatus={ChangeStatus}/>
-  ))
-}
-<p>title is {title}</p>
+        
+        <form onSubmit={addTask}>
+          <label>Task title:<input value={title} onChange={(e)=>setTitle(e.target.value)}></input></label>
+          <p>title is {title}</p>
+          <input type="submit" value="Submit"></input>        
+        </form>
+        {tasks.map(task => (
+          <TaskItem key={task.id} id={task.id} title={task.title} status={task.status} nextStatus={ChangeStatus}/>
+        ))}  
     </>
   )
 }
