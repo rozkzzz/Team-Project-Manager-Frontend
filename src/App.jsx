@@ -34,6 +34,10 @@ function App() {
       setTitle("");
     }
 
+  function deleteTask(id){
+
+  }
+
 
   return (
     <>
@@ -47,7 +51,7 @@ function App() {
           <input type="submit" value="Submit"></input>        
         </form>
         {tasks.map(task => (
-          <TaskItem key={task.id} id={task.id} title={task.title} status={task.status} nextStatus={ChangeStatus}/>
+          <TaskItem key={task.id} id={task.id} title={task.title} status={task.status} nextStatus={ChangeStatus} deleteTask={deleteTask}/>
         ))}  
     </>
   )
