@@ -1,9 +1,11 @@
 import './App.css'
 import ProjectHeader from './ProjectHeader.jsx'
-import {useState} from 'react';
+import { useState, useEffect } from 'react'
 import TaskItem from './TaskItem.jsx'
 
+
 function App() {
+  
   const projectName="Website Redesign";
   const [status,setStatus]=useState(true);
   const [tasks,setTasks] = useState([
@@ -11,7 +13,12 @@ function App() {
       { id: 2, title: 'Create API', status: 'doing' },
       { id: 3, title: 'Deploy Website', status: 'done' }
   ])
+  
+  let max = tasks.length === 0 ? 1:Math.max(...tasks.map(task=>task.id))+1;
   const [title,setTitle] = useState('');
+  useEffect(() => {
+  console.log('tasks เปลี่ยน:', tasks)
+}, [tasks])
   function ChangeStatus(id){
     let newTask = tasks.map(function(task){
         if(task.id === id){
@@ -29,15 +36,20 @@ function App() {
   }
   function addTask(e){
       e.preventDefault();
-      let newTask = {id:tasks.length+1,title:title,status:'todo'}
+      let newTask = {id:max,title:title,status:'todo'}
       setTasks([...tasks,newTask]);
       setTitle("");
     }
 
   function deleteTask(id){
+  const newTasks = tasks.filter(task => task.id !== id);
 
-  }
+  console.log("id ที่จะลบ:", id);
+  console.log("tasks ก่อนลบ:", tasks);
+  console.log("tasks หลัง filter:", newTasks);
 
+  setTasks(newTasks);
+}
 
   return (
     <>
