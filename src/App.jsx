@@ -1,11 +1,16 @@
 import './App.css'
 import ProjectHeader from './ProjectHeader.jsx'
 import { useEffect, useState } from 'react'
-import TaskItem from './TaskItem.jsx'
+import TaskList from './TaskList.jsx'
+import TaskForm from './TaskForm.jsx'
+import {Routes, Route } from 'react-router-dom';
+import Dashboard from './pages/Dashboard.jsx'
+import Projects from './pages/Projects.jsx'
 
 function App() {
   const projectName = "Website Redesign"
   const [status, setStatus] = useState(true);
+  const [error,setError] = useState("");
   const [filter, setFilter] = useState('all');
   const [tasks, setTasks] = useState(() => {
     const load = JSON.parse(localStorage.getItem('job'))
@@ -45,15 +50,16 @@ function App() {
 
   function addTask(e) {
     e.preventDefault();
-    let newTask ={};
-    if (title.trim() === '')
+    if (title.trim() === ''){
+      setError('Please enter a task title');
       return
-    else{
-      newTask = {
-      id: max,
-      title: title.trim(),
-      status: 'todo'
-    }}
+    }
+    setError('');
+    const newTask = {
+    id: max,
+    title: title.trim(),
+    status: 'todo'
+    }
 
     setTasks([...tasks, newTask])
     setTitle("")
@@ -118,30 +124,39 @@ function App() {
       >
         Done
       </button>
-      
-      <form onSubmit={addTask}>
-        <label>
-          Task title:
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </label>
+     
+<Routes>
+  <Route
+    path="/"
+    element={<Dashboard />}
+  />
 
-        <p>title is {title}</p>
-        <input type="submit" value="Submit" />
-      </form>
-      
-      {showTasks.map(task => (
-        <TaskItem
-          key={task.id}
-          id={task.id}
-          title={task.title}
-          status={task.status}
+  <Route
+    path="/projects"
+    element={
+      <>
+        <Projects />
+
+        <TaskForm
+          error={error}
+          title={title}
+          setTitle={setTitle}
+          addTask={addTask}
+        />
+
+        <TaskList
+          showTasks={showTasks}
           nextStatus={ChangeStatus}
           deleteTask={deleteTask}
         />
-      ))}
+      </>
+    }
+  />
+</Routes>
+
+     
+
+      
     </>
   )
 }
