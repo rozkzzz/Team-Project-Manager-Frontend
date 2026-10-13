@@ -3,9 +3,10 @@ import ProjectHeader from './ProjectHeader.jsx'
 import { useEffect, useState } from 'react'
 import TaskList from './TaskList.jsx'
 import TaskForm from './TaskForm.jsx'
-import {Routes, Route } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Dashboard from './pages/Dashboard.jsx'
 import Projects from './pages/Projects.jsx'
+import Layout from './Layout.jsx'
 
 function App() {
   const projectName = "Website Redesign"
@@ -125,33 +126,27 @@ function App() {
         Done
       </button>
      
-<Routes>
-  <Route
-    path="/"
-    element={<Dashboard />}
-  />
 
-  <Route
-    path="/projects"
-    element={
+<Routes>
+  <Route path="/" element={<Layout />}>
+    <Route index element={<Dashboard />} />
+    <Route path="projects" element={
       <>
         <Projects />
-
         <TaskForm
           error={error}
           title={title}
           setTitle={setTitle}
           addTask={addTask}
         />
-
         <TaskList
           showTasks={showTasks}
           nextStatus={ChangeStatus}
           deleteTask={deleteTask}
         />
       </>
-    }
-  />
+    } />
+  </Route>
 </Routes>
 
      
