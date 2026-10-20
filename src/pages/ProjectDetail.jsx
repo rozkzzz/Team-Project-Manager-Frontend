@@ -4,9 +4,12 @@ import projects from '../projects';
 function ProjectDetail() {
  let { id } = useParams();
  
- let right_project = projects.find((project)=>project.id === Number(`${id}`));
+ let right_project = projects.find((project)=>project.id === Number(id));
  if(right_project === undefined)
-    return <p>Project Not Found</p>
+    return <>
+    <p>Project Not Found</p>
+    <Link to="/projects">Projects</Link>
+    </>
  
  return <>
  {right_project.name}

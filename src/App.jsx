@@ -15,17 +15,28 @@ function App() {
   const [error,setError] = useState("");
   const [filter, setFilter] = useState('all');
   const [tasks, setTasks] = useState(() => {
-    const load = JSON.parse(localStorage.getItem('job'))
+  const load = JSON.parse(localStorage.getItem('job'))
 
     if (load !== null)
       return load
     else
       return []
-  })
+  });
+  const [apiTasks, setapiTasks] = useState([]);
+  useEffect(()=>{
+    async function dbData() {
+        let response = await fetch('http://localhost:3000/tasks');
+        let data = await response.json();
+        setapiTasks(data);
+      }
+    dbData()
+  },[]);
+  
+  
 
   useEffect(() => {
     localStorage.setItem('job', JSON.stringify(tasks))
-  }, [tasks])
+  }, [tasks]);
 
   const [title, setTitle] = useState('')
 
@@ -83,10 +94,13 @@ function App() {
     showTasks = tasks.filter((task)=>{
           return task.status === filter; 
     });
+
+
+
+
   return (
     <>
       <h1>Team Project Manager</h1>
-
       <ProjectHeader
         projectName={projectName}
         status={status ? 'Active' : 'Complete'}
@@ -150,7 +164,7 @@ function App() {
     } />
   </Route>
 </Routes>
-      
+    {apiTasks.map(task => <p key={task.id}>{task.title}</p>)}
     </>
   )
 }
